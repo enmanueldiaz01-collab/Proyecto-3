@@ -90,9 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Eliminar emojis del campo 'tipo' si existen
             const cleanTipo = vehicle.tipo ? vehicle.tipo.replace(/[\u{1F600}-\u{1F6FF}\u{1F300}-\u{1F5FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim() : '';
 
+            // Asegurarse de que vehicle.imagen sea un array y tenga al menos una URL
+            const imageUrl = Array.isArray(vehicle.imagen) && vehicle.imagen.length > 0 ? vehicle.imagen[0] : 'https://via.placeholder.com/400x200?text=No+Image';
+
             cardCol.innerHTML = `
                 <div class="card h-100">
-                    <img src="${vehicle.imagen[0]}" class="card-img-top" alt="${vehicle.marca} ${vehicle.modelo}" loading="lazy" aria-label="Imagen del vehículo ${vehicle.marca} ${vehicle.modelo}">
+                    <img src="${imageUrl}" class="card-img-top" alt="${vehicle.marca} ${vehicle.modelo}" loading="lazy" aria-label="Imagen del vehículo ${vehicle.marca} ${vehicle.modelo}">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${vehicle.marca} ${vehicle.modelo}</h5>
                         <p class="card-text text-muted small">${vehicle.categoria} - ${cleanTipo}</p>
@@ -140,12 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Configurar el carrusel de imágenes
         detailImageWrapper.innerHTML = '';
-        vehicle.imagen.forEach(imgUrl => {
+        if (Array.isArray(vehicle.imagen) && vehicle.imagen.length > 0) {
+            vehicle.imagen.forEach(imgUrl => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.innerHTML = `<img src="${imgUrl}" alt="Imagen del vehículo ${vehicle.marca} ${vehicle.modelo}">`;
+                detailImageWrapper.appendChild(slide);
+            });
+        } else {
             const slide = document.createElement('div');
             slide.className = 'swiper-slide';
-            slide.innerHTML = `<img src="${imgUrl}" alt="Imagen del vehículo ${vehicle.marca} ${vehicle.modelo}">`;
+            slide.innerHTML = `<img src="https://via.placeholder.com/600x400?text=No+Image" alt="No hay imagen disponible">`;
             detailImageWrapper.appendChild(slide);
-        });
+        }
 
         // Destruir la instancia anterior de Swiper si existe
         if (swiperInstance) {
@@ -218,6 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const addItemToCart = (vehicle, quantity) => {
         const existingItemIndex = cart.findIndex(item => item.codigo === vehicle.codigo);
 
+        // Asegurarse de que vehicle.imagen sea un array y tenga al menos una URL
+        const imageUrl = Array.isArray(vehicle.imagen) && vehicle.imagen.length > 0 ? vehicle.imagen[0] : 'https://via.placeholder.com/80x60?text=No+Image';
+
+
         if (existingItemIndex > -1) {
             cart[existingItemIndex].quantity += quantity;
         } else {
@@ -226,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 marca: vehicle.marca,
                 modelo: vehicle.modelo,
                 precio: parseFloat(vehicle.precio_venta),
-                imagen: vehicle.imagen[0], // Usar la primera imagen para el carrito
+                imagen: imageUrl, // Usar la primera imagen (o placeholder) para el carrito
                 quantity: quantity
             });
         }
@@ -320,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Título
         doc.setFontSize(24);
-        doc.text("Factura de Compra - GarageOnline", 105, 20, null, null, "center");
+        doc.text("Factura de Compra - E.D.R GARAGE", 105, 20, null, null, "center");
 
         // Información del cliente
         doc.setFontSize(12);
@@ -367,10 +381,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mensaje de agradecimiento
         y += 20;
         doc.setFontSize(10);
-        doc.text("¡Gracias por tu compra en GarageOnline!", 105, y, null, null, "center");
+        doc.text("¡Gracias por tu compra en E.D.R GARAGE!", 105, y, null, null, "center");
         doc.text("Esperamos verte de nuevo pronto.", 105, y + 7, null, null, "center");
 
-        doc.save(`factura-garageonline-${Date.now()}.pdf`);
+        doc.save(`factura-EDR-GARAGE-${Date.now()}.pdf`);
     };
 
     // --- Event Listeners ---
