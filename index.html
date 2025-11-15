@@ -1,237 +1,250 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link type="text/css" rel="stylesheet" href="style.css"/>
-  </head>
-  <body>
-    <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GarageOnline</title>
+    <title>GarageOnline - Tu Concesionario Digital</title>
+    <!-- Favicon -->
+    <link rel="icon" href="https://img.icons8.com/plasticine/100/car--v2.png" type="image/x-icon">
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- jsPDF CDN (para generar PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Swiper JS CDN (para carrusel de imágenes en detalle del vehículo) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Enlace a estilos personalizados -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-car-side"></i> GarageOnline
+    <!-- Encabezado del sitio -->
+    <header class="fixed-top" role="banner">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" aria-label="Navegación principal">
+            <div class="container">
+                <!-- Logo de la empresa -->
+                <a class="navbar-brand d-flex align-items-center" href="#" aria-label="GarageOnline Inicio">
+                    <i class="fas fa-car me-2" aria-hidden="true"></i> GarageOnline
+                </a>
+                <!-- Botón para la navegación responsive en móviles -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Contenido de la navegación -->
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- Enlace a la sección de inicio -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#inicio">Inicio</a>
+                        </li>
+                        <!-- Enlace a la sección de vehículos -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#vehiculos">Vehículos</a>
+                        </li>
+                    </ul>
+                    <!-- Barra de búsqueda -->
+                    <form class="d-flex me-3" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar vehículo..." aria-label="Buscar" id="searchInput">
+                    </form>
+                    <!-- Icono del carrito de compras con contador -->
+                    <div class="d-flex">
+                        <button class="btn btn-outline-light position-relative" id="cartBtn" aria-label="Ver carrito de compras" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount" aria-live="polite" aria-atomic="true">
+                                0
+                                <span class="visually-hidden">elementos en el carrito</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Buscar...">
-            </div>
-            <div class="user-actions">
-                <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>
-                <a href="#" class="icon-link"><i class="fas fa-download"></i></a>
-                <a href="#" class="icon-link cart-link"><i class="fas fa-shopping-cart"></i> Carrito <span class="cart-count">1</span></a>
-                <a href="#" class="btn-primary">Cuenta</a>
-            </div>
-        </div>
+        </nav>
     </header>
 
-    <nav class="main-nav">
-        <div class="container">
-            <ul>
-                <li><a href="#inicio" class="nav-link active">Inicio</a></li>
-                <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
-                <li><a href="#vehiculos" class="nav-link">Vehículos</a></li>
-                <li><a href="#ofertas" class="nav-link">Ofertas</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section id="inicio" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Bienvenido a</h1>
-                <p>Tu mejor aliado para que puedas encontrar tu vehículo ideal.</p>
-                <button class="btn-primary scroll-to-vehicles">Ver vehículos</button>
+    <!-- Contenido principal de la página -->
+    <main role="main">
+        <!-- Sección de Inicio -->
+        <section id="inicio" class="hero-section d-flex align-items-center justify-content-center text-center text-white">
+            <div class="container">
+                <h1 class="display-3 fw-bold mb-3" role="heading" aria-level="1">Bienvenido a GarageOnline</h1>
+                <p class="lead mb-4">Encuentra el vehículo de tus sueños con nosotros. Calidad, variedad y los mejores precios.</p>
+                <a href="#vehiculos" class="btn btn-light btn-lg" aria-label="Explorar nuestros vehículos">Explorar Vehículos</a>
             </div>
-            <div class="hero-image">
-                <!-- Imagen de un coche aquí, fondo en CSS -->
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="nosotros" class="about-section common-section">
-        <div class="container">
-            <h2>Sobre Nosotros</h2>
-            <p>En GarageOnline, nos apasiona conectar a las personas con el vehículo de sus sueños. Con años de experiencia en el sector automotriz, nos esforzamos por ofrecer una plataforma intuitiva y segura para la compra y venta de coches. Nuestro compromiso es brindarte la mejor experiencia, con una amplia selección de vehículos de calidad y un servicio al cliente excepcional. Creemos en la transparencia, la confianza y la satisfacción del cliente como pilares fundamentales de nuestro negocio.</p>
-            <p>Explora nuestro catálogo, encuentra tu coche perfecto y únete a la comunidad de GarageOnline. ¡Estamos aquí para ayudarte en cada paso del camino!</p>
-        </div>
-    </section>
+        <!-- Sección de Vehículos -->
+        <section id="vehiculos" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5" role="heading" aria-level="2">Nuestros Vehículos</h2>
 
-    <section id="vehiculos" class="vehicles-section common-section">
-        <div class="container">
-            <h2>Nuestros Vehículos</h2>
-            <div class="vehicle-list">
-                <div class="vehicle-card" data-vehicle-id="1">
-                    <div class="card-header">
-                        <button class="card-action-btn"><i class="fas fa-times"></i></button>
-                        <button class="card-action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                <!-- Spinner de carga -->
+                <div id="loadingSpinner" class="text-center my-5" aria-live="polite" aria-atomic="true">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando vehículos...</span>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1596489396264-b5a0346387a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="SUV Blanco">
-                    <div class="card-body">
-                        <h3>Categoría SUV</h3>
-                        <p>Vehículo espacioso y cómodo para toda la familia.</p>
-                        <a href="#" class="view-details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
+                    <p class="mt-2">Cargando vehículos...</p>
                 </div>
 
-                <div class="vehicle-card" data-vehicle-id="2">
-                    <div class="card-header">
-                        <button class="card-action-btn"><i class="fas fa-times"></i></button>
-                        <button class="card-action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1552519507-da3b1a201f14?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sedán Azul">
-                    <div class="card-body">
-                        <h3>Categoría Sedán</h3>
-                        <p>Elegancia y rendimiento en cada viaje.</p>
-                        <a href="#" class="view-details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="vehicle-card" data-vehicle-id="3">
-                    <div class="card-header">
-                        <button class="card-action-btn"><i class="fas fa-times"></i></button>
-                        <button class="card-action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1517431326402-d596499317d7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Deportivo Rojo">
-                    <div class="card-body">
-                        <h3>Categoría Deportivo</h3>
-                        <p>Velocidad y emoción al alcance de tu mano.</p>
-                        <a href="#" class="view-details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="vehicle-card" data-vehicle-id="4">
-                    <div class="card-header">
-                        <button class="card-action-btn"><i class="fas fa-times"></i></button>
-                        <button class="card-action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1582845244199-522616a92576?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Camioneta Negra">
-                    <div class="card-body">
-                        <h3>Categoría Camioneta</h3>
-                        <p>Robusta y potente para cualquier aventura.</p>
-                        <a href="#" class="view-details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="vehicle-card" data-vehicle-id="5">
-                    <div class="card-header">
-                        <button class="card-action-btn"><i class="fas fa-times"></i></button>
-                        <button class="card-action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1579737194883-7d72111d4d23?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Hatchback Azul">
-                    <div class="card-body">
-                        <h3>Categoría Compacto</h3>
-                        <p>Ideal para la ciudad, ágil y eficiente.</p>
-                        <a href="#" class="view-details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="vehicle-card" data-vehicle-id="6">
-                    <div class="card-header">
-                        <button class="card-action-btn"><i class="fas fa-times"></i></button>
-                        <button class="card-action-btn"><i class="fas fa-ellipsis-v"></i></button>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1512411516068-196b7975d4a1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vehículo Lujoso">
-                    <div class="card-body">
-                        <h3>Categoría Lujo</h3>
-                        <p>Exclusividad y confort en cada detalle.</p>
-                        <a href="#" class="view-details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <!-- Contenedor de productos -->
+                <div class="row" id="productsContainer" role="region" aria-label="Listado de vehículos disponibles">
+                    <!-- Las tarjetas de vehículos se cargarán aquí dinámicamente -->
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section id="ofertas" class="offers-section common-section">
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white text-center py-4" role="contentinfo">
         <div class="container">
-            <h2>Nuestras Ofertas</h2>
-            <div class="offers-grid">
-                <div class="offer-card">
-                    <h3>Descuento de Invierno</h3>
-                    <p>Hasta 15% de descuento en modelos seleccionados.</p>
-                    <button class="btn-primary">Ver Ofertas</button>
-                </div>
-                <div class="offer-card">
-                    <h3>Financiación 0% Interés</h3>
-                    <p>Planes de financiación sin intereses por 24 meses.</p>
-                    <button class="btn-primary">Más Detalles</button>
-                </div>
-                <div class="offer-card">
-                    <h3>Mantenimiento Gratuito</h3>
-                    <p>Un año de mantenimiento gratis al comprar un vehículo nuevo.</p>
-                    <button class="btn-primary">Condiciones</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <h3>GarageOnline</h3>
-                <p>© GarageOnline 2023 Todos los derechos reservados.</p>
-                <p>Diseñado con <i class="fas fa-heart"></i> amor y pasión.</p>
+            <p>&copy; 2024 GarageOnline. Todos los derechos reservados. Desarrollado con <i class="fas fa-heart text-danger"></i></p>
+            <div class="social-icons mt-3">
+                <a href="#" class="text-white mx-2" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white mx-2" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mx-2" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Modal de Cantidad (Modal de Detalles del Vehículo) -->
-    <div id="quantityModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Modal de Cantidad</h3>
-                <span class="close-button">&times;</span>
-            </div>
-            <div class="modal-body">
-                <h4>Detalles del Vehículo</h4>
-                <div class="vehicle-detail-summary">
-                    <img src="https://images.unsplash.com/photo-1552519507-da3b1a201f14?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Coche Azul">
-                    <div class="vehicle-info-text">
-                        <p>Modelo Deportivo A</p>
-                        <p>Versión Limitada</p>
-                        <p>Color Azul Oceánico</p>
-                        <p>Potencia 200 HP</p>
+    <!-- Modales -->
+
+    <!-- Modal de Detalle del Vehículo -->
+    <div class="modal fade" id="vehicleDetailModal" tabindex="-1" aria-labelledby="vehicleDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="vehicleDetailModalLabel">Detalle del Vehículo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="swiper-container mySwiper" id="vehicleImageCarousel">
+                                <div class="swiper-wrapper" id="detailImageWrapper">
+                                    <!-- Las imágenes se cargarán aquí -->
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <h3 id="detailMarcaModelo"></h3>
+                            <p class="text-muted" id="detailCategoria"></p>
+                            <h4 class="text-primary mt-3" id="detailPrecio"></h4>
+                            <hr>
+                            <h5>Características:</h5>
+                            <ul class="list-unstyled" id="detailFeatures">
+                                <!-- Las características se cargarán aquí -->
+                            </ul>
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="button" class="btn btn-primary btn-lg" id="detailAddToCartBtn">
+                                    <i class="fas fa-cart-plus me-2"></i> Añadir al Carrito
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="vehicle-details-table">
-                    <table>
-                        <tr><td>Marca</td><td>Toyota</td></tr>
-                        <tr><td>Modelo</td><td>Corolla</td></tr>
-                        <tr><td>Año</td><td>2023</td></tr>
-                        <tr><td>Kilometraje</td><td>15.000 KM</td></tr>
-                        <tr><td>Categoría</td><td>Sedán</td></tr>
-                        <tr><td>Combustible</td><td>Gasolina</td></tr>
-                        <tr><td>Transmisión</td><td>Automática</td></tr>
-                        <tr><td>Color</td><td>Azul</td></tr>
-                        <tr><td>Estado</td><td>Usado</td></tr>
-                        <tr><td>Precio Base</td><td>$18.000</td></tr>
-                        <tr class="highlighted-price"><td>Impuestos</td><td><strong>$830.00</strong></td></tr>
-                        <tr class="highlighted-price"><td>Descuento</td><td><strong>-$900.00</strong></td></tr>
-                        <tr class="highlighted-price"><td>Precio Final</td><td><strong>$17.930.00</strong></td></tr>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary">Personalizar</button>
-                <button class="btn-primary">Añadir al Carrito</button>
-                <button class="btn-secondary">Contactar</button>
-                <button class="btn-tertiary">Solicitar Prueba</button>
             </div>
         </div>
     </div>
 
-    <button class="chat-fab"><i class="fas fa-comment"></i></button>
 
+    <!-- Modal de Cantidad -->
+    <div class="modal fade" id="quantityModal" tabindex="-1" aria-labelledby="quantityModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quantityModalLabel">Seleccionar Cantidad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="quantityInput" class="form-label">Cantidad:</label>
+                        <input type="number" class="form-control" id="quantityInput" value="1" min="1" aria-label="Cantidad de vehículos">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="addToCartBtn">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del Carrito -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Tu Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems" class="list-group">
+                        <!-- Los ítems del carrito se cargarán aquí dinámicamente -->
+                        <p class="text-center text-muted" id="emptyCartMessage">El carrito está vacío.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
+                        <h5 class="mb-0">Total:</h5>
+                        <h5 class="mb-0 text-primary" id="cartTotal">€0.00</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir viendo vehículos</button>
+                    <button type="button" class="btn btn-success" id="checkoutBtn" data-bs-toggle="modal" data-bs-target="#paymentModal" disabled>Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pago -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Información de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentForm">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Nombre Completo:</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Ej: Juan Pérez" required aria-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Número de Tarjeta:</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" pattern="[0-9]{16}" title="16 dígitos numéricos" required aria-required="true">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="expiryDate" class="form-label">Fecha de Vencimiento (MM/AA):</label>
+                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/?([0-9]{2})" title="Formato MM/AA" required aria-required="true">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cvv" class="form-label">CVV:</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="XXX" pattern="[0-9]{3,4}" title="3 o 4 dígitos numéricos" required aria-required="true">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico:</label>
+                            <input type="email" class="form-control" id="email" placeholder="ejemplo@dominio.com" required aria-required="true">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="paymentForm" class="btn btn-primary" id="processPaymentBtn">Procesar Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JavaScript Bundle con Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Enlace a script personalizado -->
     <script src="script.js"></script>
 </body>
-</html>
-    <script type="module" src="script.js"></script>
-  </body>
 </html>
